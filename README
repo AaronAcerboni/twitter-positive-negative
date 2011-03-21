@@ -1,0 +1,50 @@
+----------------------------------------------
+Twitter Positive Negative
+Developed by Aaron Acerboni
+Date started: 21 March 2010
+----------------------------------------------
+
+
+----------------------------------------------
+What is it?
+----------------------------------------------
+
+	Twitter positive negative is a simple tool for comparing the amount of positivity about a searched
+	twitter subject with it's associated negativity. In theory one should be able to grasp the popularity
+	of a subject.
+	
+----------------------------------------------
+How does it work?
+----------------------------------------------
+
+	It utilizes 2 simple PHP objects which allow for data retrieval and data sorting
+	of twitter search's positive and negative semantics.
+	
+	The Result object may then be used to get the resulted data which may be stored in a 
+	database or be used to create visual graphs on the javascript side for example.
+
+----------------------------------------------
+Project purpose
+----------------------------------------------
+
+	To learn about building open source and redistributable software.
+	To provide software which may be of use to someone.
+
+----------------------------------------------
+Features
+----------------------------------------------
+	
+	Simple functionality in 2 objects :
+		- Fetcher object responsible for data retrieval
+			- Allow for different search parameters
+			- Allow for a modular getting data method, can request 100 tweets or even 1000
+		- Result object responsible for turning this data into comparison data ie percentage
+			- Intelligent to grasp popularity of subject and request more pages
+			- Optional method to allow for the retrieval of example tweet based on popularity
+			- Optional method to allow for the retrieval of the type of data comparison used
+
+----------------------------------------------
+Logic
+----------------------------------------------
+
+	...
