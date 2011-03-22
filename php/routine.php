@@ -11,7 +11,7 @@ construction. This can change if it will make a nicer interface.*/
 	
 	$result = new Result($fetcher->getData()) or die("no results found");
 	
-	$percentages = $result->getPercentages();
+	$percentages = $result->getPercentages() . "%";
 	$algorithmUsed = $result->getPercentageType();
 	
 	//Twitter positive negative use is over.
