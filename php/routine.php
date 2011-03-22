@@ -13,8 +13,6 @@ construction*/
 	
 	$percentages = $result->getPercentages();
 	
-	 // optional... $percentageType = $result->getPercentageType();
-	
 	//return $percentage or even $percentageType as needed
 	echo "Positive : " . $percentages["positive"] . "<br/>";
 	echo "Negative : " . $percentages["negative"] . "<br/>";
