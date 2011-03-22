@@ -20,16 +20,13 @@ class Fetcher{
 	}
 	
 	public function getData(){//specify page number as parameter for Result
-		if(searchTermSet){
-			/*
-			$positiveData = file_get_contents($apiInterface . "q=" . $searchTerm ."+%3A)"."&result_type=recent&rpp=100") or die("Fail at :) file_get_contents @ Fetcher.getData()");
-			$negativeData = file_get_contents($apiInterface . "q=" . $searchTerm ."+%3A("."&result_type=recent&rpp=100") or die("Fail at :( file_get_contents @ Fetcher.getData()");
-			*/
-			$positiveData = file_get_contents("http://www.search.twitter.com/search.json?q=" . $searchTerm ."+%3A)"."&result_type=recent&rpp=100") or die("Fail at :) file_get_contents @ Fetcher.getData()");
-			$negativeData = file_get_contents("http://www.search.twitter.com/search.json?q=" . $searchTerm ."+%3A("."&result_type=recent&rpp=100") or die("Fail at :( file_get_contents @ Fetcher.getData()");
+		if($this->searchTermSet){
+		
+			$pData = file_get_contents("http://www.search.twitter.com/search.json?q=" . $this->searchTerm ."+%3A)"."&result_type=recent&rpp=100") or die("Fail at :) file_get_contents @ Fetcher.getData()");
+			$nData = file_get_contents("http://www.search.twitter.com/search.json?q=" . $this->searchTerm ."+%3A("."&result_type=recent&rpp=100") or die("Fail at :( file_get_contents @ Fetcher.getData()");
 		
 			//collate data
-			$data = array( "positive" => json_decode($positiveData, true), "negative" => json_decode($negativeData, true) , "searched" => $searchTerm);
+			$data = array( "positive" => json_decode($pData, true), "negative" => json_decode($nData, true) , "searched" => $this->searchTerm);
 			//return data
 			return $data;
 			

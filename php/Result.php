@@ -27,12 +27,12 @@ class Result{
 	
 		//Tally
 	
-		$tempPos;
-		$tempNeg;
-		for($i=0; $i < count($negativeData["results"]); $i++){
+		$tempPos=0;
+		$tempNeg=0;
+		for($i=0; $i < count($this->negativeData["results"]); $i++){
 			$tempNeg++;
 		}
-		for($i=0; $i < count($positiveData["results"]); $i++){
+		for($i=0; $i < count($this->positiveData["results"]); $i++){
 			$tempPos++;
 		}
 		
@@ -42,16 +42,16 @@ class Result{
 		if(($tempPos + $tempNeg) != 0){
 		
 			//Assess wether more results are needed			
-			if($tempPos = 100 || $tempNeg = 100){
+			if($tempPos == 100 || $tempNeg == 100){
 			
-				$percentageType = "tweetRate";
+				$this->percentageType = "tweetRate";
 				//tweetRate scenario
 				//when asking for more pages reuse the Fetcher object passed in with class wide availability
 				
 			} else {
 			
-				$percentageType = "tally";
-				makePercentage($tempPos,$tempNeg);
+				$this->percentageType = "tally";
+				$this->makePercentage($tempPos,$tempNeg);
 				
 			}
 			
@@ -63,15 +63,15 @@ class Result{
 	}
 	
 	private function makePercentage($pos, $neg){
-		$positivePercentage = round( ($pos / ($pos + $neg))*100 );
-		$negativePercentage = round( 100 - $positivePercentage );
+		$this->positivePercentage = round( ($pos / ($pos + $neg))*100 );
+		$this->negativePercentage = round( 100 - $this->positivePercentage );
 	}
 	
 	public function getPercentages(){
-		return array("positive" => $positivePercentage, "negative" => $negativePercentage);
+		return array("positive" => $this->positivePercentage, "negative" => $this->negativePercentage);
 	}
 	public function getPercentageType(){
-		return $percentageType;
+		return $this->percentageType;
 	}
 }
 ?>
