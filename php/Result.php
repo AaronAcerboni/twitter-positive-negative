@@ -9,14 +9,14 @@ class Result{
 	private $positiveData;
 	private $searchTerm;
 	
-	// DATA RESULTS
+	// HUMAN READABLE DATA RESULTS
 	private $positivePercentage;
 	private $negativePercentage;
 	private $percentageType;
 	
 	/******************************/
 	
-	function __construct($data){
+	function __construct($data){	//Requires Fetchers getData() raw data
 		$this->negativeData = $data["negative"];
 		$this->positiveData = $data["positive"];
 		$this->searchTerm = $data["searched"];
@@ -25,7 +25,7 @@ class Result{
 	
 	private function assessDataVolume(){
 	
-		//Tally
+		//Tally, try for the easy scenario first
 	
 		$tempPos=0;
 		$tempNeg=0;
@@ -41,11 +41,10 @@ class Result{
 		
 		if(($tempPos + $tempNeg) != 0){
 		
-			//Assess wether more results are needed			
+			//Assess wether more results are needed	aka 'tweet rate' scenario		
 			if($tempPos == 100 || $tempNeg == 100){
 			
 				$this->percentageType = "tweetRate";
-				//tweetRate scenario
 				//when asking for more pages reuse the Fetcher object passed in with class wide availability
 				
 			} else {
@@ -62,10 +61,14 @@ class Result{
 		}
 	}
 	
+	//UTILITY
+	
 	private function makePercentage($pos, $neg){
 		$this->positivePercentage = round( ($pos / ($pos + $neg))*100 );
 		$this->negativePercentage = round( 100 - $this->positivePercentage );
 	}
+	
+	//GETTERS
 	
 	public function getPercentages(){
 		return array("positive" => $this->positivePercentage, "negative" => $this->negativePercentage);

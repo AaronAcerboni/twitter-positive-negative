@@ -3,7 +3,7 @@ include("Fetcher.php");
 include("Result.php");
 
 /*This routine may vary but the result object always needs the data from the fetcher on
-construction*/
+construction. This can change if it will make a nicer interface.*/
 
 	$fetcher = new Fetcher();
 	
@@ -12,9 +12,11 @@ construction*/
 	$result = new Result($fetcher->getData()) or die("no results found");
 	
 	$percentages = $result->getPercentages();
+	$algorithmUsed = $result->getPercentageType();
 	
-	//return $percentage or even $percentageType as needed
+	//Twitter positive negative use is over.
+	
 	echo "Positive : " . $percentages["positive"] . "<br/>";
 	echo "Negative : " . $percentages["negative"] . "<br/>";
-	echo "Algorithm : " . $result->getPercentageType();
+	echo "Algorithm : " . $algorithmUsed;
 ?>

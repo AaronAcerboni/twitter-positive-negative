@@ -19,7 +19,7 @@ class Fetcher{
 		$this->searchTermSet = true;
 	}
 	
-	public function getData(){//specify page number as parameter for Result
+	public function getData(){//FUTURE: specify page number as parameter for when Result must get a wider range of tweets
 		if($this->searchTermSet){
 		
 			$pData = file_get_contents("http://www.search.twitter.com/search.json?q=" . $this->searchTerm ."+%3A)"."&result_type=recent&rpp=100") or die("Fail at :) file_get_contents @ Fetcher.getData()");
