@@ -4,47 +4,95 @@ Developed by Aaron Acerboni
 Date started: 21 March 2010
 ----------------------------------------------
 
+Currently :
+The basic tally scenario works. The more complex tweet rate
+is still to be completed.
 
-----------------------------------------------
-What is it?
-----------------------------------------------
+So searching something obscure which doesn't exceed 100 tweets should
+prove fruitful.
 
-	Twitter positive negative is a simple tool for comparing the amount of positivity about a searched
-	twitter subject with it's associated negativity. In theory one should be able to grasp the popularity
-	of a subject.
-	
-----------------------------------------------
-How does it work?
-----------------------------------------------
-
-	It utilizes 2 simple PHP objects which allow for data retrieval and data sorting
-	of twitter search's positive and negative semantics.
-	
-	The Result object may then be used to get the resulted data which may be stored in a 
-	database or be used to create visual graphs on the javascript side for example.
+Most of my testing came about using the keyword "barnacles" :-)
 
 ----------------------------------------------
 Project purpose
 ----------------------------------------------
 
-	To learn about building open source and redistributable software.
-	To provide software which may be of use to someone.
+To learn about building open source and redistributable software.
+To provide software which may be of use to someone.
 
 ----------------------------------------------
-Features
+What is it?
+----------------------------------------------
+
+Twitter positive negative is a simple tool for comparing the amount of positivity about a searched
+twitter subject with it's associated negativity. In theory one should be able to grasp the popularity
+of a subject.
+
+----------------------------------------------
+How does it work? (See Logic)
+----------------------------------------------
+
+It utilizes 2 simple PHP objects which allow for data retrieval and data sorting
+of twitter search's positive and negative semantics.
+
+The Result object may then be used to get the resulted data.
+
+A developer may use this tool to create a visualization of a users search term or this tool
+may be use to collect data over a period of time.
+
+----------------------------------------------
+Planned Features
 ----------------------------------------------
 	
-	Simple functionality in 2 objects :
-		- Fetcher object responsible for data retrieval
-			- Allow for different search parameters
-			- Allow for a modular getting data method, can request 100 tweets or even 1000
-		- Result object responsible for turning this data into comparison data ie percentage
-			- Intelligent to grasp popularity of subject and request more pages
-			- Optional method to allow for the retrieval of example tweet based on popularity
-			- Optional method to allow for the retrieval of the type of data comparison used
+Simple functionality in 2 objects :
+
+	- Fetcher object responsible for data retrieval
+		- Allow for different search parameters (search term, a date range etc.)
+		- Allow for a more dynamic get data method eg. can request 100 tweets or 1000
+		
+	- Result object responsible for turning this data into comparison data IE a percentage from a tally
+		- Intelligent to grasp popularity of subject and request more pages for a more accurate result
+		- Optional method to allow for the retrieval of example tweet based on popularity
+		- Optional method to allow for the retrieval of the type of data comparison used
 
 ----------------------------------------------
 Logic
 ----------------------------------------------
 
-	...
+This tool primarily functions from the TWITTER API's positive and negative sentiment filtering.
+
+Currently, sentiment data is returned from the tool as two percentage values representing positivity
+and negativity.
+
+These two values are to be derived from two different ways depending on the popularity of a subject.
+
+1. Derived from tally.
+
+For unpopular subjects (100 tweets or lower) a simple tally is done for negative tweets in that subject
+and for the positive tweets.
+
+2. Derived from 'tweet rate'.
+
+For popular subjects (100 tweets or higher) which span multiple pages, a more complicated approach is taken.
+The percentage is derived from a 'tweet rate', basically the amount of tweets between the earliest tweet and the
+latest tweet.
+
+One can expect that positive and negative sentiment will have different tweet rates and a percentage can be made.
+
+This approach is taken simply because we can't request over 1000 tweets from the api and tally that up.
+
+Since twitter limits 100 tweets per page, traversing pages can be an expensive trip. I intend for the Result object to
+guestimate the page to land on by measuring the time between tweets.
+
+ie. If a subject has tweets seconds apart one can assume its very popular and will have a page 10.
+
+Page guestimation is tricky business because twitter's api does not provide any fallback. If you ask for a page which shouldn't
+exist then you get an error.
+
+For the sake of development we can hard code a fallback to page=2. Perhaps, in future development this page fallback
+can be included in the Result object's public interface.
+
+---
+
+I've also been thinking of combining these two algorithms for a more robust set of data. Really, these two came about because
+of the limitations of the twitter api in this scenario.
