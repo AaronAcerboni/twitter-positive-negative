@@ -1,14 +1,13 @@
-
 /*LAYOUT*/
 
 body{
 	margin:1.4em;
+	color:#848484;
 }
 
 .section{
 	font-family:verdana, arial, helvetica, sans-serif;
 	font-size:10px;
-	color:#848484;
 	line-height:170%;
 	padding: 3em 0em 3em 0em;
 	margin-left:2em;
@@ -77,4 +76,14 @@ ul.tags li a{
 	color:#ffffff;
 	background-color:#fe9900;
 	padding:.2em;
+}
+
+span.resultPositive{
+	color:#7edf44;
+	font-size:400%;
+	padding:
+}
+span.resultNegative{
+	color:#fe9900;
+	font-size:400%;
 }

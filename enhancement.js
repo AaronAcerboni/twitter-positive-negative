@@ -1,10 +1,9 @@
-//to be done at a later date, not really fundamental
-
 $(document).ready(function(){
 	
 	/*Initialise listeners*/
 	$("div.section form").submit(
 		function(){
+			showLoader();
 			query();
 			return false;
 		}
@@ -26,6 +25,10 @@ $(document).ready(function(){
 	
 	function parseData(data){
 		$('#graph').html("<h1>Optimism</h1>"+data);
+	}
+	
+	function showLoader(){
+		$('#graph').html("<h1>Optimism</h1><p><img src='img/loader.gif' alt='getting results'/></p>");
 	}
 	
 });
