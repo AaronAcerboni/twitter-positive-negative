@@ -19,24 +19,38 @@ class Fetcher{
 		$this->searchTermSet = true;
 	}
 	
-	public function getData(){//FUTURE: specify page number as parameter for when Result must get a wider range of tweets
+	public function getData(){
+		$param = func_get_args();
 		if($this->searchTermSet){
-		
-			$pData = file_get_contents("http://www.search.twitter.com/search.json?q=" . $this->searchTerm ."+%3A)"."&result_type=recent&rpp=100") or die("Fail at :) file_get_contents @ Fetcher.getData()");
-			$nData = file_get_contents("http://www.search.twitter.com/search.json?q=" . $this->searchTerm ."+%3A("."&result_type=recent&rpp=100") or die("Fail at :( file_get_contents @ Fetcher.getData()");
-		
-			//collate data
-			$data = array( "positive" => json_decode($pData, true), "negative" => json_decode($nData, true) , "searched" => $this->searchTerm);
-			//return data
-			return $data;
+			switch(count($param)){
 			
+				case 0 ://get 1st page
+					$pData = file_get_contents($this->apiInterface . "q=" . $this->searchTerm ."+%3A)"."&result_type=recent&rpp=100") or die("Fail at :) file_get_contents @ Fetcher.getData(0)");
+					$nData = file_get_contents($this->apiInterface . "q=" . $this->searchTerm ."+%3A("."&result_type=recent&rpp=100") or die("Fail at :( file_get_contents @ Fetcher.getData(0)");
+					//collate data
+					$data = array("positive" => json_decode($pData, true), "negative" => json_decode($nData, true) , "searched" => $this->searchTerm);
+					//return data
+					return $data;
+				break;
+				
+				case 1 ://get x page
+					if(is_numeric($param[0])){
+						$pData = file_get_contents($this->apiInterface . "q=" . $this->searchTerm ."+%3A)"."&result_type=recent&rpp=100&page=".$param[0]) or die("Fail at :) file_get_contents @ Fetcher.getData(1)");
+						$nData = file_get_contents($this->apiInterface . "q=" . $this->searchTerm ."+%3A("."&result_type=recent&rpp=100&page=".$param[0]) or die("Fail at :( file_get_contents @ Fetcher.getData(1)");
+						//collate data
+						$data = array("positive" => json_decode($pData, true), "negative" => json_decode($nData, true) , "searched" => $this->searchTerm);
+						//return data
+						return $data;
+					} else {
+						die("Parameter specified was not a (page) number @ Fetcher.getData");
+					}
+				break;
+				default : die("More than one parameter was specified @ Fetcher.getData()");
+			}
 		} else {
-			die("Search term was never set.\n Use setSearchTerm() before getData().");
+			die("Search term was never set.\n Use Fetcher.setSearchTerm() before Fetcher.getData().");
 		}
 	}
 
 }
 ?>
-
-
-

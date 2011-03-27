@@ -2,21 +2,32 @@
 include("Fetcher.php");
 include("Result.php");
 
-/*This routine may vary but the result object always needs the data from the fetcher on
-construction. This can change if it will make a nicer interface.*/
+	if(isset($_GET["q"])){
+		if(strlen($_GET["q"]) > 0){
+			$fetcher = new Fetcher();	
+			$fetcher->setSearchTerm($_GET['q']);
+			
+			$results = new Result($fetcher);
+			
+			$results->setData($fetcher->getData());
+			
+			$results->parseData() or die ($results->resultError);
+			
+			$percentages = $results->getPercentages();
+			
+			echo "<p>Positive : <span class='resultPositive'>" . $percentages["positive"] . "%</span></p>";
+			echo "<p>Negative : <span class='resultNegative'>" . $percentages["negative"] . "%</span></p>";
 
-	$fetcher = new Fetcher();
-	
-	$fetcher->setSearchTerm($_GET['q']);
-	
-	$result = new Result($fetcher->getData()) or die("no results found");
-	
-	$percentages = $result->getPercentages() . "%";
-	$algorithmUsed = $result->getPercentageType();
-	
-	//Twitter positive negative use is over.
-	
-	echo "Positive : " . $percentages["positive"] . "<br/>";
-	echo "Negative : " . $percentages["negative"] . "<br/>";
-	echo "Algorithm : " . $algorithmUsed;
+			echo "<p>Derived from the ";
+				if($results->getPercentageType() == "tally"){
+					echo "tally algorithm.</p>";
+				} else if ($results->getPercentageType() == "tweetRate"){
+					echo "tweet rate algorithm.</p>";
+				}
+		} else {
+			echo "<p>Your search parameter was or came up empty <span class='sadface'>:(</span></p>";
+		}
+	} else {
+		echo "<p>Your search parameter was or came up empty <span class='sadface'>:(</span></p>";
+	}
 ?>
