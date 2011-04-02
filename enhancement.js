@@ -28,7 +28,7 @@ $(document).ready(function(){
 	}
 	
 	function showLoader(){
-		$('#graph').html("<h1>Optimism</h1><p><img src='img/loader.gif' alt='getting results'/></p>");
+		$('#graph').html("<h1>Optimism</h1><img src='img/loader.gif' alt='getting results'/>");
 	}
 	
 });
